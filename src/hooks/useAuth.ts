@@ -27,7 +27,7 @@ async function checkAuthorization(supabaseUser: any): Promise<AppUser | null> {
   try {
     const { data, error } = await supabase
       .from('permissions')
-      .select('email, name, isAdmin, status')
+      .select('email, full_name, is_admin, status')
       .eq('email', email)
       .maybeSingle();
 
@@ -35,8 +35,10 @@ async function checkAuthorization(supabaseUser: any): Promise<AppUser | null> {
     if (data.status !== 'active') return null;
 
     return {
-      ...data,
-      isAdmin: !!data.isAdmin,
+      email: data.email,
+      name: data.full_name,
+      isAdmin: !!data.is_admin,
+      status: data.status,
       id: supabaseUser.id,
     } as AppUser;
   } catch {

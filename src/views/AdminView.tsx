@@ -29,12 +29,18 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
     setIsLoading(true);
     try {
       const [usersRes, watchedRes, favRes] = await Promise.all([
-        supabase.from('permissions').select('*').order('name'),
+        supabase.from('permissions').select('*').order('full_name'),
         supabase.from('user_video_progress').select('id', { count: 'exact' }).eq('watched', true),
         supabase.from('user_favorites').select('id', { count: 'exact' }),
       ]);
 
-      if (usersRes.data) setUsers(usersRes.data as AppUser[]);
+      if (usersRes.data) setUsers(usersRes.data.map((u: any) => ({
+        email: u.email,
+        name: u.full_name,
+        isAdmin: !!u.is_admin,
+        status: u.status,
+        id: u.id,
+      })) as AppUser[]);
 
       const startOfMonth = new Date();
       startOfMonth.setDate(1);
@@ -92,7 +98,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
       if (authError && !authError.message.includes('already registered')) throw authError;
 
       await supabase.from('permissions').upsert(
-        { email, name, isAdmin: false, status: 'active' },
+        { email, full_name: name, is_admin: false, status: 'active' },
         { onConflict: 'email' }
       );
       setCreationSuccess({ email, name });
@@ -111,7 +117,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
     setIsLoading(true);
     try {
       await supabase.from('permissions').upsert(
-        emails.map(email => ({ email, name: email.split('@')[0], isAdmin: false, status: 'active' })),
+        emails.map(email => ({ email, full_name: email.split('@')[0], is_admin: false, status: 'active' })),
         { onConflict: 'email' }
       );
       alert(`יובאו ${emails.length} משתמשים בהצלחה!`);
@@ -144,7 +150,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
       }
       for (const user of INITIAL_USERS) {
         await supabase.from('permissions').upsert(
-          { email: user.email.toLowerCase(), name: user.name, isAdmin: user.isAdmin, status: user.status },
+          { email: user.email.toLowerCase(), full_name: user.name, is_admin: user.isAdmin, status: user.status },
           { onConflict: 'email' }
         );
       }
