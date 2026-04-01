@@ -7,7 +7,6 @@ import { useAuth } from './hooks/useAuth';
 import { useProgress } from './hooks/useProgress';
 import { useFavorites } from './hooks/useFavorites';
 import { Navbar } from './components/Navbar';
-import { AIChat } from './components/AIChat';
 import { LoginView } from './views/LoginView';
 import { DashboardView } from './views/DashboardView';
 import { CategoryDetailView } from './views/CategoryDetailView';
@@ -138,7 +137,6 @@ const App: React.FC = () => {
         <AdminView onBack={() => setCurrentView(View.DASHBOARD)} onDataRefresh={fetchCategories} />
       )}
 
-      {currentView !== View.LOGIN && <AIChat />}
     </div>
   );
 };

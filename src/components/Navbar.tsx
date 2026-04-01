@@ -67,7 +67,8 @@ export const Navbar: React.FC<NavbarProps> = ({ user, currentView, onNavigate, o
 
       {/* Mobile top bar (compact) */}
       <div
-        className="sm:hidden sticky top-0 z-50 bg-[#050505]/85 backdrop-blur-3xl border-b border-white/5 shadow-sm shadow-black/40 px-4 py-3 flex justify-between items-center"
+        className="sm:hidden sticky top-0 z-50 bg-[#050505]/85 backdrop-blur-3xl border-b border-white/5 shadow-sm shadow-black/40 px-4 flex justify-between items-center"
+        style={{ paddingTop: 'max(12px, env(safe-area-inset-top))', paddingBottom: '12px' }}
         dir="rtl"
       >
         <div className="flex items-center gap-3">

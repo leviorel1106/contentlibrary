@@ -107,16 +107,18 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 )}
 
                 {/* Category image or emoji fallback */}
-                <div className="flex justify-center mb-5">
+                <div className="mb-5 -mx-6 -mt-7">
                   {cat.image ? (
                     <img
                       src={cat.image}
                       alt={cat.title}
-                      className="w-28 h-28 rounded-[22px] object-cover shadow-xl shadow-black/40 group-hover:scale-105 transition-transform duration-500"
+                      className="w-full aspect-square object-cover rounded-t-[40px] group-hover:brightness-110 transition-all duration-500"
                     />
                   ) : (
-                    <div className="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 text-4xl border border-white/5">
-                      {cat.emoji}
+                    <div className="flex justify-center pt-7">
+                      <div className="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 text-4xl border border-white/5">
+                        {cat.emoji}
+                      </div>
                     </div>
                   )}
                 </div>
