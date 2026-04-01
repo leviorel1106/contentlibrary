@@ -1,8 +1,9 @@
-const CACHE_NAME = 'orel-library-v1';
+const CACHE_NAME = 'orel-library-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/orel-profile.png',
 ];
 
 self.addEventListener('install', (event) => {
