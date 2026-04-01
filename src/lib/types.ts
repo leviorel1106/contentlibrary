@@ -36,6 +36,7 @@ export interface CategoryContent {
   id: string;
   title: string;
   emoji: string;
+  image?: string;
   description: string;
   isComingSoon?: boolean;
   videos?: Video[];

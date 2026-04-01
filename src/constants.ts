@@ -185,6 +185,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '9',
     title: 'קורס אליי מושלם ב-7 ימים',
     emoji: '🐕💨',
+    image: '/categories/recall.jpg',
     description: 'הקורס המקיף ביותר ללימוד קריאת "אליי" בטוחה ומהירה תוך שבוע. 14 שיעורים של תאוריה ותרגול.',
     videos: recallCourseVideos()
   },
@@ -192,6 +193,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '10',
     title: 'קורס GUESTS - איך להכניס אורחים הביתה בשקט',
     emoji: '🚪🤝',
+    image: '/categories/guests.jpg',
     description: 'איך להכניס אורחים הביתה בשקט וברוגע ב-5 ימים בלבד.',
     videos: guestsCourseVideos()
   },
@@ -199,6 +201,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '1',
     title: 'התחלה נכונה ובניית בסיס',
     emoji: '🏠',
+    image: '/categories/foundation.jpg',
     description: 'הנחת היסודות לקשר בריא בתוך הבית וגבולות ברורים.',
     videos: baseCourseVideos()
   },
@@ -206,6 +209,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '2',
     title: 'הרגלה לכלוב אילוף',
     emoji: '📦',
+    image: '/categories/crate.jpg',
     description: 'הפיכת הכלוב למקום רגוע ובטוח עבור הכלב.',
     videos: [
       {
@@ -271,6 +275,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '5',
     title: 'נשכנות גורית',
     emoji: '🦷',
+    image: '/categories/chewing.jpg',
     description: 'ניהול יצר הנשכנות והפנייתו למשחקים מתאימים.',
     isComingSoon: true,
     videos: [
@@ -300,6 +305,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '6',
     title: 'פריקת אנרגיה',
     emoji: '🎾',
+    image: '/categories/energy.jpg',
     description: 'המדריך המלא לפריקת אנרגיה מאוזנת: פיזית, מנטלית ואוראלית.',
     videos: energyReleaseVideos()
   },

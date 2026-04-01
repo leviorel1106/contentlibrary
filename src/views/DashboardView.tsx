@@ -84,21 +84,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <div
                 key={cat.id}
                 onClick={() => { if (!cat.isComingSoon) onSelectCategory(cat); }}
-                className={`warm-card p-8 rounded-[40px] relative group ${
+                className={`warm-card p-6 pt-7 rounded-[40px] relative group ${
                   cat.isComingSoon
                     ? 'opacity-60 grayscale cursor-not-allowed'
                     : 'cursor-pointer'
                 }`}
               >
                 {cat.isComingSoon && (
-                  <div className="absolute top-6 left-6 bg-orange-600/15 text-orange-400 border border-orange-600/25 text-[10px] font-bold px-3 py-1 rounded-full z-20 backdrop-blur-sm">
+                  <div className="absolute top-4 left-4 bg-orange-600/15 text-orange-400 border border-orange-600/25 text-[10px] font-bold px-3 py-1 rounded-full z-20 backdrop-blur-sm">
                     בקרוב
                   </div>
                 )}
 
                 {/* Progress bar */}
                 {!cat.isComingSoon && total > 0 && (
-                  <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-[40px] overflow-hidden bg-white/8">
+                  <div className="absolute top-0 left-0 right-0 h-1 rounded-t-[40px] overflow-hidden bg-white/8">
                     <div
                       className="h-full bg-gradient-to-r from-orange-600 to-orange-400 transition-all duration-500 shadow-sm shadow-orange-600/50"
                       style={{ width: `${pct}%` }}
@@ -106,15 +106,27 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </div>
                 )}
 
-                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 text-4xl border border-white/5">
-                  {cat.emoji}
+                {/* Category image or emoji fallback */}
+                <div className="flex justify-center mb-5">
+                  {cat.image ? (
+                    <img
+                      src={cat.image}
+                      alt={cat.title}
+                      className="w-28 h-28 rounded-[22px] object-cover shadow-xl shadow-black/40 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 text-4xl border border-white/5">
+                      {cat.emoji}
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-white leading-snug">{cat.title}</h3>
-                <p className="text-xs text-gray-500 mb-6 line-clamp-2 leading-relaxed font-medium">
+
+                <h3 className="text-base font-bold mb-2 text-white leading-snug text-center">{cat.title}</h3>
+                <p className="text-xs text-gray-500 mb-5 line-clamp-2 leading-relaxed font-medium text-center">
                   {cat.description}
                 </p>
 
-                <div className="flex items-center gap-2 mt-auto">
+                <div className="flex items-center gap-2">
                   <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full shadow-sm shadow-orange-600/50 transition-all duration-500"
