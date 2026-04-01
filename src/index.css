@@ -9,9 +9,9 @@
     padding: 0;
   }
   body {
-    background-color: #050505;
+    background-color: #080808;
     color: white;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     /* Safe area for iOS notch / home indicator */
     padding-bottom: env(safe-area-inset-bottom);
@@ -23,6 +23,11 @@
   #root {
     width: 100%;
     min-height: 100vh;
+    /* Warm ambient glow — makes glassmorphism visible */
+    background:
+      radial-gradient(ellipse 80% 50% at 70% -10%, rgba(234,88,12,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 20% 110%, rgba(234,88,12,0.08) 0%, transparent 60%),
+      #080808;
   }
   /* Prevent iOS zoom on input focus */
   input, textarea, select {
@@ -36,12 +41,88 @@
 }
 
 @layer components {
+  /* Standard glass — now visible against the ambient glow */
   .glass {
-    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/10;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
+
+  /* Elevated glass — for login card, panels */
+  .glass-elevated {
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Warm card — for category cards, KPI cards */
+  .warm-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(234,88,12,0.04) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .warm-card:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(234,88,12,0.08) 100%);
+    border-color: rgba(234, 88, 12, 0.45);
+    box-shadow: 0 16px 56px rgba(234, 88, 12, 0.14), 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transform: translateY(-8px) scale(1.01);
+  }
+
+  /* Orange border card — for add-user panel, active modals */
+  .orange-border-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(234, 88, 12, 0.35);
+    box-shadow: 0 0 0 1px rgba(234, 88, 12, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Section label — replaces plain tracking-widest labels */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #ea580c;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #ea580c;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Orange gradient text */
+  .text-orange-gradient {
+    background: linear-gradient(135deg, #ea580c 0%, #fb923c 60%, #fdba74 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle grid overlay */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Orange glow */
   .orange-glow {
-    box-shadow: 0 0 40px rgba(234, 88, 12, 0.3);
+    box-shadow: 0 0 40px rgba(234, 88, 12, 0.25), 0 0 80px rgba(234, 88, 12, 0.1);
   }
+
+  /* Hide scrollbar */
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -69,4 +150,28 @@
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

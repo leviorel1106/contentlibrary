@@ -75,23 +75,24 @@ export const LoginView: React.FC<LoginViewProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 sm:p-6 text-right relative overflow-hidden">
+    <div className="min-h-screen bg-[#050505] bg-grid flex items-center justify-center p-4 sm:p-6 text-right relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-orange-600/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-600/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-[-20%] right-[-15%] w-[75%] h-[75%] bg-orange-600/[0.16] blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-20%] left-[-15%] w-[60%] h-[60%] bg-orange-600/[0.09] blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(234,88,12,0.04),transparent)]" />
 
-      <div className="glass p-6 sm:p-10 rounded-[30px] sm:rounded-[45px] w-full max-w-md relative z-10 shadow-2xl animate-fade-in">
+      <div className="glass-elevated p-6 sm:p-10 rounded-[40px] sm:rounded-[48px] w-full max-w-md relative z-10 shadow-2xl animate-fade-up">
         {/* Profile */}
         <div className="text-center mb-8 sm:mb-10">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full p-1.5 mb-6 sm:mb-8 border-2 border-orange-600 orange-glow overflow-hidden relative group">
+          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full mb-6 sm:mb-8 ring-2 ring-orange-600/60 ring-offset-4 ring-offset-[#050505] shadow-[0_0_40px_rgba(234,88,12,0.35)] overflow-hidden relative group">
             <img
               src="https://i.postimg.cc/6679qDD9/Gemini-Generated-Image-kgh6zckgh6zckgh6.png"
               className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-700"
               alt="Orel"
             />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white italic tracking-tighter uppercase mb-1">אוראל לוי</h1>
-          <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em]">תוכן הדרכה אקסקלוסיבי</p>
+          <h1 className="text-4xl sm:text-5xl font-['Bebas_Neue'] tracking-wide uppercase mb-1 text-orange-gradient">אוראל לוי</h1>
+          <p className="text-zinc-500 text-[11px] font-medium uppercase tracking-[0.25em]">תוכן הדרכה אקסקלוסיבי</p>
         </div>
 
         {/* PASSWORD RESET MODE — user came from reset email link */}
@@ -110,7 +111,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 required
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 transition-all placeholder:text-gray-600"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600"
               />
               <input
                 type="password"
@@ -118,12 +119,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 required
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 transition-all placeholder:text-gray-600"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600"
               />
               <button
                 type="submit"
                 disabled={resetLoading}
-                className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 text-white font-black py-4 rounded-2xl transition-all shadow-lg shadow-orange-600/20 active:scale-95 uppercase tracking-widest text-sm"
+                className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 text-white font-bold py-3.5 rounded-2xl transition-all shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50 active:scale-[0.98] uppercase tracking-widest text-sm"
               >
                 {resetLoading ? 'שומר...' : 'שמור סיסמה חדשה'}
               </button>
@@ -136,7 +137,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
           <div className="animate-fade-in">
             {forgotSent ? (
               <div className="text-center py-6">
-                <div className="text-5xl mb-4">📧</div>
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-600/15 border border-orange-600/25 flex items-center justify-center">
+                <svg className="w-8 h-8 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+              </div>
                 <h3 className="text-lg font-black text-white mb-2">הקישור נשלח!</h3>
                 <p className="text-gray-500 text-sm mb-6">בדוק את המייל שלך ולחץ על הקישור לאיפוס הסיסמה.</p>
                 <button
@@ -162,12 +167,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     required
                     value={forgotEmail}
                     onChange={e => setForgotEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 transition-all placeholder:text-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600"
                   />
                   <button
                     type="submit"
                     disabled={forgotLoading}
-                    className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 text-white font-black py-4 rounded-2xl transition-all shadow-lg shadow-orange-600/20 active:scale-95 uppercase tracking-widest text-sm"
+                    className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 text-white font-bold py-3.5 rounded-2xl transition-all shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50 active:scale-[0.98] uppercase tracking-widest text-sm"
                   >
                     {forgotLoading ? 'שולח...' : 'שלח קישור לאיפוס'}
                   </button>
@@ -199,7 +204,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 transition-all placeholder:text-gray-600"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600"
               />
               <input
                 type="password"
@@ -207,7 +212,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 transition-all placeholder:text-gray-600"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600"
               />
 
               {/* Remember me + forgot password row */}
@@ -269,7 +274,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
           <div className="animate-fade-in">
             {inquirySuccess ? (
               <div className="text-center py-8">
-                <div className="text-5xl mb-4">✅</div>
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
                 <h3 className="text-xl font-bold text-white mb-2">הפנייה התקבלה!</h3>
                 <p className="text-gray-500 text-sm mb-6">ניצור איתך קשר בקרוב.</p>
                 <button
@@ -282,10 +291,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
             ) : (
               <form onSubmit={e => { e.preventDefault(); setInquirySuccess(true); }} className="space-y-4">
                 <h2 className="text-xl font-bold text-white mb-6 text-center italic">יצירת קשר</h2>
-                <input type="text" placeholder="שם מלא" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 placeholder:text-gray-600" />
-                <input type="email" placeholder="אימייל" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 placeholder:text-gray-600" />
-                <input type="tel" placeholder="טלפון" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:ring-2 focus:ring-orange-600 placeholder:text-gray-600" />
-                <button type="submit" className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-lg mt-4 hover:bg-orange-500 transition-all">שלח הודעה</button>
+                <input type="text" placeholder="שם מלא" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600" />
+                <input type="email" placeholder="אימייל" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600" />
+                <input type="tel" placeholder="טלפון" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-right outline-none focus:border-orange-600/50 focus:ring-2 focus:ring-orange-600/15 transition-all placeholder:text-zinc-600" />
+                <button type="submit" className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50 mt-4 transition-all active:scale-[0.98] uppercase tracking-widest text-sm">שלח הודעה</button>
                 <button type="button" onClick={() => setShowInquiry(false)} className="w-full text-gray-500 text-xs font-bold py-2 uppercase tracking-widest mt-2 hover:text-gray-400 transition-colors">ביטול</button>
               </form>
             )}
