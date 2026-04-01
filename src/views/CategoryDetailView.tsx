@@ -33,7 +33,7 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
   onBack,
 }) => {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl animate-fade-in" dir="rtl">
+    <div className="container mx-auto px-4 py-6 sm:py-8 pb-28 sm:pb-8 max-w-5xl animate-fade-in" dir="rtl">
       {/* Header */}
       <div className="flex justify-between items-end mb-10 text-right">
         <div>
@@ -134,7 +134,7 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
 
         {/* Lesson List */}
         <div className="lg:col-span-4 text-right">
-          <div className="glass p-6 rounded-[35px] border border-white/5 max-h-[600px] overflow-y-auto no-scrollbar">
+          <div className="glass p-6 rounded-[35px] border border-white/5 max-h-[350px] lg:max-h-[600px] overflow-y-auto no-scrollbar">
             <h4 className="text-[10px] font-black text-orange-500 mb-6 uppercase border-r-4 border-orange-600 pr-3 tracking-[0.2em]">
               תוכנית הלימודים
             </h4>

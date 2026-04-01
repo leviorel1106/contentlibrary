@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '../lib/supabase';
 import type { AppUser } from '../lib/types';
 import { INITIAL_CATEGORIES, INITIAL_USERS } from '../constants';
+
+const APP_URL = 'https://contentlibrary-green.vercel.app';
 
 interface AdminStats {
   activeUsers: number;
@@ -16,7 +19,7 @@ interface AdminViewProps {
 }
 
 export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) => {
-  const [tab, setTab] = useState<'users' | 'seed'>('users');
+  const [tab, setTab] = useState<'users' | 'seed' | 'install'>('users');
   const [users, setUsers] = useState<AppUser[]>([]);
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -214,6 +217,12 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
         >
           סנכרון תכנים
         </button>
+        <button
+          onClick={() => setTab('install')}
+          className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${tab === 'install' ? 'bg-orange-600 text-white' : 'text-gray-500 hover:text-white'}`}
+        >
+          התקנה
+        </button>
       </div>
 
       {tab === 'users' && (
@@ -323,6 +332,49 @@ export const AdminView: React.FC<AdminViewProps> = ({ onBack, onDataRefresh }) =
           >
             {isLoading ? 'מסנכרן...' : 'סנכרן תכנים למסד הנתונים'}
           </button>
+        </div>
+      )}
+
+      {tab === 'install' && (
+        <div className="max-w-lg mx-auto space-y-6 animate-fade-in">
+          {/* QR Code card */}
+          <div className="glass p-10 rounded-[40px] text-center">
+            <div className="text-4xl mb-4">📱</div>
+            <h3 className="text-xl font-black text-white mb-2 italic uppercase tracking-tighter">התקנת האפליקציה</h3>
+            <p className="text-gray-500 text-xs mb-8 font-medium">סרוק את הברקוד עם הטלפון להתקנה מיידית</p>
+            <div className="bg-white p-5 rounded-[24px] inline-block shadow-2xl mb-6">
+              <QRCodeSVG value={APP_URL} size={200} level="H" />
+            </div>
+            <p className="text-gray-600 text-[10px] font-mono break-all">{APP_URL}</p>
+          </div>
+
+          {/* iOS instructions */}
+          <div className="glass p-6 rounded-[30px]" dir="rtl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-white/5 rounded-2xl flex items-center justify-center text-xl">🍎</div>
+              <h4 className="font-black text-white text-sm uppercase tracking-widest">iPhone / iPad</h4>
+            </div>
+            <ol className="space-y-2 text-gray-400 text-xs font-medium">
+              <li className="flex gap-2"><span className="text-orange-500 font-black">1.</span> פתח את הקישור בדפדפן Safari</li>
+              <li className="flex gap-2"><span className="text-orange-500 font-black">2.</span> לחץ על כפתור השיתוף <span className="text-white">⬆</span> בתחתית המסך</li>
+              <li className="flex gap-2"><span className="text-orange-500 font-black">3.</span> בחר <span className="text-white font-black">"הוסף למסך הבית"</span></li>
+              <li className="flex gap-2"><span className="text-orange-500 font-black">4.</span> לחץ <span className="text-white font-black">הוסף</span> — האפליקציה מותקנת!</li>
+            </ol>
+          </div>
+
+          {/* Android instructions */}
+          <div className="glass p-6 rounded-[30px]" dir="rtl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-white/5 rounded-2xl flex items-center justify-center text-xl">🤖</div>
+              <h4 className="font-black text-white text-sm uppercase tracking-widest">Android</h4>
+            </div>
+            <ol className="space-y-2 text-gray-400 text-xs font-medium">
+              <li className="flex gap-2"><span className="text-orange-500 font-black">1.</span> פתח את הקישור בדפדפן Chrome</li>
+              <li className="flex gap-2"><span className="text-orange-500 font-black">2.</span> תופיע הודעה <span className="text-white font-black">"הוסף למסך הבית"</span> אוטומטית</li>
+              <li className="flex gap-2"><span className="text-orange-500 font-black">3.</span> לחץ <span className="text-white font-black">התקן</span> — זהו!</li>
+            </ol>
+            <p className="text-gray-600 text-[10px] mt-3">אם לא הופיעה הודעה: תפריט ⋮ → הוסף למסך הבית</p>
+          </div>
         </div>
       )}
     </div>

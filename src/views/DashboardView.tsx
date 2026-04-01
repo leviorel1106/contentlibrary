@@ -34,11 +34,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   };
 
   return (
-    <main className="container mx-auto px-6 py-12 max-w-6xl text-right animate-fade-in" dir="rtl">
+    <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-12 pb-28 sm:pb-12 max-w-6xl text-right animate-fade-in" dir="rtl">
       {/* Hero Greeting */}
-      <div className="mb-12">
+      <div className="mb-8 sm:mb-12">
         <p className="text-orange-500 font-black text-xs uppercase tracking-[0.3em] mb-2">ברוך הבא</p>
-        <h1 className="text-5xl font-black text-white italic tracking-tighter uppercase">
+        <h1 className="text-3xl sm:text-5xl font-black text-white italic tracking-tighter uppercase">
           שלום, {user.name.split(' ')[0]}
         </h1>
         <p className="text-gray-500 text-sm mt-2 font-medium">הספרייה האישית שלך מחכה לך</p>

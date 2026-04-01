@@ -22,8 +22,11 @@ const App: React.FC = () => {
     isProcessing,
     errorMessage,
     initStatus,
+    isResetMode,
     login,
     logout,
+    forgotPassword,
+    updatePassword,
   } = useAuth();
 
   const { watched, toggleWatched } = useProgress(currentUser?.id);
@@ -97,7 +100,14 @@ const App: React.FC = () => {
       )}
 
       {currentView === View.LOGIN && (
-        <LoginView onLogin={login} isProcessing={isProcessing} errorMessage={errorMessage} />
+        <LoginView
+          onLogin={login}
+          onForgotPassword={forgotPassword}
+          onUpdatePassword={updatePassword}
+          isResetMode={isResetMode}
+          isProcessing={isProcessing}
+          errorMessage={errorMessage}
+        />
       )}
 
       {currentView === View.DASHBOARD && currentUser && (

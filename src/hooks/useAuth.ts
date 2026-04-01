@@ -55,6 +55,7 @@ export function useAuth() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [initStatus, setInitStatus] = useState('מתחבר למערכת...');
+  const [isResetMode, setIsResetMode] = useState(false);
   const isCheckingAuth = useRef(false);
 
   // Safety: reset isProcessing if stuck
@@ -82,11 +83,22 @@ export function useAuth() {
 
         const session = data?.session;
         if (session?.user && !isCheckingAuth.current) {
+          // Remember-me check: if user opted out of persistence and this is a new browser session
+          const noPersist = localStorage.getItem('orel_no_persist') === 'true';
+          const hasActiveSession = sessionStorage.getItem('orel_active') === '1';
+          if (noPersist && !hasActiveSession) {
+            await supabase.auth.signOut();
+            if (mounted) setIsInitializing(false);
+            clearTimeout(emergencyTimer);
+            return;
+          }
+
           isCheckingAuth.current = true;
           setInitStatus('מאמת הרשאות...');
           const user = await checkAuthorization(session.user);
           if (mounted) {
             if (user) {
+              sessionStorage.setItem('orel_active', '1');
               setCurrentUser(user);
               setCurrentView(View.DASHBOARD);
             } else {
@@ -113,6 +125,14 @@ export function useAuth() {
     let mounted = true;
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!mounted) return;
+
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsResetMode(true);
+        setCurrentView(View.LOGIN);
+        setIsInitializing(false);
+        return;
+      }
+
       const isAuthEvent = ['SIGNED_IN', 'INITIAL_SESSION', 'USER_UPDATED'].includes(event);
 
       if (isAuthEvent && session?.user && !isCheckingAuth.current) {
@@ -137,13 +157,15 @@ export function useAuth() {
         setCurrentUser(null);
         setCurrentView(View.LOGIN);
         setIsProcessing(false);
+        setIsResetMode(false);
         isCheckingAuth.current = false;
+        sessionStorage.removeItem('orel_active');
       }
     });
     return () => { mounted = false; subscription.unsubscribe(); };
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, rememberMe: boolean = true) => {
     if (isProcessing) return;
     setIsProcessing(true);
     setErrorMessage(null);
@@ -153,6 +175,14 @@ export function useAuth() {
         if (error.message.includes('fetch')) throw new Error('נכשל בהתחברות לשרת. בדוק חיבור אינטרנט.');
         throw error;
       }
+      // Store remember-me preference
+      if (rememberMe) {
+        localStorage.removeItem('orel_no_persist');
+      } else {
+        localStorage.setItem('orel_no_persist', 'true');
+      }
+      sessionStorage.setItem('orel_active', '1');
+
       if (data.session?.user && !isCheckingAuth.current) {
         const user = await checkAuthorization(data.session.user);
         if (user) {
@@ -165,6 +195,19 @@ export function useAuth() {
     } finally {
       setTimeout(() => setIsProcessing(false), 3000);
     }
+  };
+
+  const forgotPassword = async (email: string): Promise<void> => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase().trim(), {
+      redirectTo: `${window.location.origin}/`,
+    });
+    if (error) throw error;
+  };
+
+  const updatePassword = async (newPassword: string): Promise<void> => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+    setIsResetMode(false);
   };
 
   const logout = async () => {
@@ -189,7 +232,10 @@ export function useAuth() {
     errorMessage,
     setErrorMessage,
     initStatus,
+    isResetMode,
     login,
     logout,
+    forgotPassword,
+    updatePassword,
   };
 }

@@ -11,52 +11,123 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ user, currentView, onNavigate, onLogout }) => {
   return (
-    <nav
-      className="border-b border-white/5 px-6 py-4 flex justify-between items-center sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-2xl"
-      dir="rtl"
-    >
-      <div className="flex items-center gap-4">
-        <div className="w-10 h-10 bg-orange-600 rounded-2xl flex items-center justify-center font-black text-white shadow-lg shadow-orange-600/20">
-          {user.name?.charAt(0) || 'א'}
-        </div>
-        <div className="hidden sm:block text-right">
-          <div className="text-sm font-black italic leading-none mb-0.5">{user.name}</div>
-          <div className="text-[8px] text-orange-500 font-black uppercase tracking-[0.3em]">
-            {user.isAdmin ? 'מנהל מערכת' : 'לקוח פרימיום'}
+    <>
+      {/* Desktop top navbar */}
+      <nav
+        className="border-b border-white/5 px-6 py-4 hidden sm:flex justify-between items-center sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-2xl"
+        dir="rtl"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-orange-600 rounded-2xl flex items-center justify-center font-black text-white shadow-lg shadow-orange-600/20">
+            {user.name?.charAt(0) || 'א'}
+          </div>
+          <div className="text-right">
+            <div className="text-sm font-black italic leading-none mb-0.5">{user.name}</div>
+            <div className="text-[8px] text-orange-500 font-black uppercase tracking-[0.3em]">
+              {user.isAdmin ? 'מנהל מערכת' : 'לקוח פרימיום'}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex gap-6 md:gap-10 items-center">
-        <button
-          onClick={() => onNavigate(View.DASHBOARD)}
-          className={`text-[11px] font-black uppercase tracking-widest transition-all pb-1 border-b-2 ${
-            currentView === View.DASHBOARD
-              ? 'text-white border-orange-600'
-              : 'text-gray-600 border-transparent hover:text-white'
-          }`}
-        >
-          ספרייה
-        </button>
-        {user.isAdmin && (
+        <div className="flex gap-6 md:gap-10 items-center">
           <button
-            onClick={() => onNavigate(View.ADMIN)}
+            onClick={() => onNavigate(View.DASHBOARD)}
             className={`text-[11px] font-black uppercase tracking-widest transition-all pb-1 border-b-2 ${
-              currentView === View.ADMIN
+              currentView === View.DASHBOARD
                 ? 'text-white border-orange-600'
                 : 'text-gray-600 border-transparent hover:text-white'
             }`}
           >
-            ניהול
+            ספרייה
+          </button>
+          {user.isAdmin && (
+            <button
+              onClick={() => onNavigate(View.ADMIN)}
+              className={`text-[11px] font-black uppercase tracking-widest transition-all pb-1 border-b-2 ${
+                currentView === View.ADMIN
+                  ? 'text-white border-orange-600'
+                  : 'text-gray-600 border-transparent hover:text-white'
+              }`}
+            >
+              ניהול
+            </button>
+          )}
+          <button
+            onClick={onLogout}
+            className="text-[9px] font-black text-white/10 hover:text-red-500 transition-all uppercase tracking-widest border border-white/5 px-4 py-2 rounded-xl"
+          >
+            יציאה
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile top bar (compact) */}
+      <div
+        className="sm:hidden sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-2xl border-b border-white/5 px-4 py-3 flex justify-between items-center"
+        dir="rtl"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-orange-600 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg shadow-orange-600/20">
+            {user.name?.charAt(0) || 'א'}
+          </div>
+          <div>
+            <div className="text-xs font-black italic leading-none">{user.name}</div>
+            <div className="text-[8px] text-orange-500 font-black uppercase tracking-widest">
+              {user.isAdmin ? 'מנהל מערכת' : 'לקוח פרימיום'}
+            </div>
+          </div>
+        </div>
+        <div className="text-[9px] font-black text-orange-600 uppercase tracking-widest">
+          {currentView === View.DASHBOARD ? 'ספרייה' : currentView === View.ADMIN ? 'ניהול' : 'שיעור'}
+        </div>
+      </div>
+
+      {/* Mobile bottom navigation bar */}
+      <nav
+        className="sm:hidden fixed bottom-0 inset-x-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-2xl border-t border-white/5 flex justify-around items-center px-2 pt-2"
+        style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}
+        dir="rtl"
+      >
+        {/* Library */}
+        <button
+          onClick={() => onNavigate(View.DASHBOARD)}
+          className={`flex flex-col items-center gap-1 px-5 py-1.5 rounded-2xl transition-all ${
+            currentView === View.DASHBOARD ? 'text-orange-500' : 'text-gray-600'
+          }`}
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={currentView === View.DASHBOARD ? 2.5 : 1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 7l9-4 9 4" />
+          </svg>
+          <span className="text-[9px] font-black uppercase tracking-wider">ספרייה</span>
+        </button>
+
+        {/* Admin (only for admins) */}
+        {user.isAdmin && (
+          <button
+            onClick={() => onNavigate(View.ADMIN)}
+            className={`flex flex-col items-center gap-1 px-5 py-1.5 rounded-2xl transition-all ${
+              currentView === View.ADMIN ? 'text-orange-500' : 'text-gray-600'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={currentView === View.ADMIN ? 2.5 : 1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            <span className="text-[9px] font-black uppercase tracking-wider">ניהול</span>
           </button>
         )}
+
+        {/* Logout */}
         <button
           onClick={onLogout}
-          className="text-[9px] font-black text-white/10 hover:text-red-500 transition-all uppercase tracking-widest border border-white/5 px-4 py-2 rounded-xl"
+          className="flex flex-col items-center gap-1 px-5 py-1.5 rounded-2xl transition-all text-gray-600 hover:text-red-500"
         >
-          יציאה
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span className="text-[9px] font-black uppercase tracking-wider">יציאה</span>
         </button>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
