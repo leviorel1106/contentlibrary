@@ -234,7 +234,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
                       className="sr-only"
                     />
                     <div
-                      onClick={() => setRememberMe(v => !v)}
                       className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer ${
                         rememberMe ? 'bg-orange-600 border-orange-600' : 'bg-transparent border-white/20 hover:border-white/40'
                       }`}

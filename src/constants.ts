@@ -185,7 +185,6 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '9',
     title: 'קורס אליי מושלם ב-7 ימים',
     emoji: '🐕💨',
-    image: '/categories/recall.jpg',
     description: 'הקורס המקיף ביותר ללימוד קריאת "אליי" בטוחה ומהירה תוך שבוע. 14 שיעורים של תאוריה ותרגול.',
     videos: recallCourseVideos()
   },
@@ -238,6 +237,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '3',
     title: 'פקודות בסיס',
     emoji: '✋',
+    image: '/categories/recall.jpg',
     description: 'לימוד שב, ארצה, הישאר ופקודות משמעת חיוניות.',
     videos: mockVideos('פקודות בסיס'),
     isComingSoon: true

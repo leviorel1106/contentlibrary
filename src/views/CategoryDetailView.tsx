@@ -143,7 +143,10 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
 
         {/* Lesson List */}
         <div className="lg:col-span-4 text-right">
-          <div className="glass p-6 rounded-[35px] border border-white/5 max-h-[350px] lg:max-h-[600px] overflow-y-auto no-scrollbar">
+          <div
+            className="glass p-6 rounded-[35px] border border-white/5 max-h-[350px] lg:max-h-[600px] overflow-y-auto no-scrollbar touch-pan-y overscroll-contain"
+            style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+          >
             <h4 className="font-['Bebas_Neue'] text-sm text-orange-500 mb-6 uppercase border-r-4 border-orange-600 pr-3 tracking-[0.2em]">
               תוכנית הלימודים
             </h4>
