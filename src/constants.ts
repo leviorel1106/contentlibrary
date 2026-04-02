@@ -185,6 +185,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '9',
     title: 'קורס אליי מושלם ב-7 ימים',
     emoji: '🐕💨',
+    image: '/categories/recall-course.jpg',
     description: 'הקורס המקיף ביותר ללימוד קריאת "אליי" בטוחה ומהירה תוך שבוע. 14 שיעורים של תאוריה ותרגול.',
     videos: recallCourseVideos()
   },
@@ -246,6 +247,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '4',
     title: 'הליכה נכונה עם רצועה',
     emoji: '🐕',
+    image: '/categories/leash-walk.jpg',
     description: 'טיול רגוע ללא משיכות וניטרול גירויים ברחוב.',
     isComingSoon: true,
     videos: [
@@ -313,6 +315,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '7',
     title: 'אכילה מהרצפה',
     emoji: '🍕',
+    image: '/categories/floor-eating.jpg',
     description: 'מניעת איסוף אוכל ומפגעים מהמדרכה במהלך הטיול.',
     videos: [
       {
@@ -331,6 +334,7 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     id: '8',
     title: 'תינוק חדש בבית',
     emoji: '👶',
+    image: '/categories/new-baby.jpg',
     description: 'הכנת הכלב לשינוי הגדול והכרת התינוק בצורה בטוחה.',
     videos: mockVideos('תינוק חדש'),
     isComingSoon: true
