@@ -87,7 +87,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           <div className="w-40 h-40 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden mb-6 sm:mb-8 shadow-[0_0_40px_rgba(234,88,12,0.4)] relative group">
             <img
               src="/orel-profile.png"
-              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               alt="Orel"
             />
           </div>
