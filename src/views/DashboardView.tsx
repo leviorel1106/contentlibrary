@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { CategoryContent, Video, AppUser } from '../lib/types';
 
 interface DashboardViewProps {
@@ -19,6 +19,22 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onSelectFavoriteVideo,
 }) => {
   const [activeTab, setActiveTab] = useState<'library' | 'favorites'>('library');
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    const raw = localStorage.getItem('orel_streak');
+    if (raw) {
+      const { count, lastDate } = JSON.parse(raw);
+      const today = new Date().toISOString().slice(0, 10);
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      if (lastDate === today || lastDate === yesterday) setStreak(count);
+    }
+  }, []);
+
+  const totalVideos = categories.reduce((s, c) => s + (c.videos?.length || 0), 0);
+  const totalWatched = categories.reduce((s, c) =>
+    s + (c.videos?.filter(v => watched.has(v.id)).length || 0), 0);
+  const overallPct = totalVideos > 0 ? Math.round((totalWatched / totalVideos) * 100) : 0;
 
   const favoriteVideos: { video: Video; cat: CategoryContent }[] = [];
   categories.forEach(cat => {
@@ -43,6 +59,34 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </h1>
         <p className="text-zinc-400 text-sm mt-2 font-medium">הספרייה האישית שלך מחכה לך</p>
       </div>
+
+      {/* Progress Stats */}
+      {totalVideos > 0 && (
+        <div className="glass rounded-[28px] px-6 py-5 mb-8 flex justify-between items-center gap-4">
+          <div className="text-center flex-shrink-0">
+            <div className="text-2xl font-['Bebas_Neue'] text-orange-500">{streak}</div>
+            <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ימים רצוף 🔥</div>
+          </div>
+          <div className="w-px h-10 bg-white/10 flex-shrink-0" />
+          <div className="text-center flex-shrink-0">
+            <div className="text-2xl font-['Bebas_Neue'] text-white">
+              {totalWatched}<span className="text-zinc-600 text-base">/{totalVideos}</span>
+            </div>
+            <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">שיעורים</div>
+          </div>
+          <div className="w-px h-10 bg-white/10 flex-shrink-0" />
+          <div className="flex-1 text-center min-w-0">
+            <div className="text-2xl font-['Bebas_Neue'] text-orange-500">{overallPct}%</div>
+            <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1.5">הושלם</div>
+            <div className="h-1 w-full bg-white/8 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full transition-all duration-700"
+                style={{ width: `${overallPct}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex mb-10">
