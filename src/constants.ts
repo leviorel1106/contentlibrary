@@ -240,8 +240,18 @@ export const INITIAL_CATEGORIES: CategoryContent[] = [
     emoji: '✋',
     image: '/categories/recall.jpg',
     description: 'לימוד שב, ארצה, הישאר ופקודות משמעת חיוניות.',
-    videos: mockVideos('פקודות בסיס'),
-    isComingSoon: true
+    videos: [
+      {
+        id: 'basic-1',
+        title: 'בסיס לפקודות שב ארצה לגורים',
+        vimeoId: '1181153204',
+        duration: '',
+        description: 'לימוד פקודות שב וארצה לגורים בצורה נכונה ומהנה.',
+        thumbnailUrl: '',
+        bulletPoints: [],
+        resources: []
+      }
+    ]
   },
   {
     id: '4',
